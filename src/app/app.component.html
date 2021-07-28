@@ -1,0 +1,29 @@
+<div class="row vh-100" style="width: calc(100% - 10px)">
+  <div class="col-md-12">
+    <button class="btn btn-default" (click)="addTag('b');"><b>B</b></button>
+    <button class="btn btn-default" (click)="addTag('i');"><i>i</i></button>
+    <button class="btn btn-default" (click)="addTag('u');"><u>u</u></button>
+    <button class="btn btn-default" (click)="addTag('size', '18');">F-18</button>
+    <button class="btn btn-default" (click)="addTag('size', '24');">F-24</button>
+    <button class="btn btn-default" (click)="addTag('color', 'red');" style="color: red">C-Red</button>
+    <button class="btn btn-default" (click)="addTag('color', 'blue');" style="color: blue">C-Blue</button>
+    <button class="btn btn-default" (click)="addTag('img');">IMG</button>
+    <button class="btn btn-default" (click)="addTag('twitter');">TW</button>
+    <button class="btn btn-default" (click)="addTag('youtube');">YT</button>
+    <button class="btn btn-default" (click)="addTag('fb-video');">FB</button>
+    <button class="btn btn-default" (click)="addTag('spoil');">Spoil</button>
+    <button class="btn btn-default" (click)="clear();">Reset</button>
+  </div>
+  <div class="col-md-6" style="height: calc(100% - 50px)">
+    <textarea
+      id="editor"
+      class="text-editor"
+      name="text"
+      [(ngModel)]="text"
+      (keyup)="parse()"
+      (select)="selectionchange($event)"
+    ></textarea>
+  </div>
+
+  <div class="col-md-6 content" style="height: calc(100% - 50px)" [innerHtml]="parseText | safeHtml"></div>
+</div>

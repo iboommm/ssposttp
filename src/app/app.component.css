@@ -1,0 +1,12 @@
+.text-editor {
+    width: 100%;
+    height: calc(100% - 1rem);
+}
+.content {
+    overflow: scroll;
+}
+
+.content img {
+    max-width: auto;
+    max-height: 250px;
+}

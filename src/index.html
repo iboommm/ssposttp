@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>SS Post Template</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script
+      type="text/javascript"
+      src="//code.jquery.com/jquery-3.6.0.min.js"
+    ></script>
+  </head>
+  <body>
+
+    <button class="btn btn-primary" style="position: fixed; top: 0; right: 0;z-index: 9999;" onclick="update()">Re-compile</button>
+    <app-root></app-root>
+
+    <script type="text/javascript">
+      function spoilButton(obj) {
+        var objspoil = $(obj).parent().find(".spoilCon");
+        if ($(objspoil).is(":visible")) {
+          $(objspoil).hide();
+        } else {
+          $(objspoil).show();
+        }
+      }
+      function youtube_parser(url) {
+        var regExp =
+          /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+        var match = url.match(regExp);
+        return match && match[7].length == 11 ? match[7] : false;
+      }
+
+      function formatText(tag) {
+        var selectedText = document.selection.createRange().text;
+
+        if (selectedText != "") {
+          var newText = "[" + tag + "]" + selectedText + "[/" + tag + "]";
+          document.selection.createRange().text = newText;
+        }
+      }
+    </script>
+
+    <script type="text/javascript">
+      function update() {
+        $("iframe").each((x) => {
+          const id = youtube_parser($("iframe")[x].src);
+          $("iframe")[x].src = "https://www.youtube.com/embed/" + id;
+        });
+
+        $("div.twitter").each(async (x) => {
+          const link = $("div.twitter")[x].getAttribute("link");
+          let result = "";
+          const a = await $.get(
+            `https://cors-anywhere.herokuapp.com/https://publish.twitter.com/oembed?url=${link}&format=json`
+          );
+          $("div.twitter")[x].innerHTML = a.html;
+          console.log(("div.twitter")[x]);
+        });
+      }
+
+      $(() => {
+        update();
+      });
+    </script>
+  </body>
+</html>
